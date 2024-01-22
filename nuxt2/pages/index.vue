@@ -1,14 +1,11 @@
 <template>
-  <div>
-    <!-- <Tutorial /> -->
-
-    <h1>Nuxt2 Test</h1>
-    <p>Gray Color</p>
-  </div>
+	<div>
+		<p>Home</p>
+	</div>
 </template>
 
 <script>
 export default {
-  name: 'IndexPage',
+	name: 'IndexPage',
 }
 </script>
