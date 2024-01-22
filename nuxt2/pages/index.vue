@@ -1,5 +1,10 @@
 <template>
-  <Tutorial />
+  <div>
+    <!-- <Tutorial /> -->
+
+    <h1>Nuxt2 Test</h1>
+    <p>Gray Color</p>
+  </div>
 </template>
 
 <script>
