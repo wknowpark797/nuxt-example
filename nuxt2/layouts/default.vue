@@ -14,3 +14,10 @@ export default {
     }
 }
 </script>
+
+<style lang="scss" scoped>
+    #app {
+        margin-top: 55px;
+        padding-top: 20px;
+    }
+</style>

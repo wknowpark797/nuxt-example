@@ -10,6 +10,8 @@
                 <nuxt-link to="/users/2">2번 User</nuxt-link>
             </li>
         </ul>
+
+        <div style="height: 1000px" />
     </div>
 </template>
 

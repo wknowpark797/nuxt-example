@@ -1,6 +1,6 @@
 <template>
     <nav class="menu-wrap">
-        <ul>
+        <ul :class="{ scroll : scroll }">
             <li>
                 <nuxt-link to="/">
                     Home
@@ -11,6 +11,11 @@
                     Users
                 </nuxt-link>
             </li>
+            <li>
+                <nuxt-link to="/random">
+                    Random
+                </nuxt-link>
+            </li>
         </ul>
     </nav>
 </template>
@@ -18,17 +23,43 @@
 <script>
 export default {
     name: 'MenuComp',
+    data() {
+        return {
+            scroll: false
+        }
+    },
+	mounted() {
+		window.addEventListener('scroll', this.handleScroll);
+	},
+	beforeDestroy() {
+		window.removeEventListener('scroll', this.handleScroll);
+	},
+    methods: {
+		handleScroll() {
+            this.scroll = window.scrollY > 0;
+		}
+	},
 }
 </script>
 
 <style lang="scss" scoped>
     .menu-wrap {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+
         ul {
-            height: 40px;
+            height: 55px;
             display: flex;
             align-items: center;
             justify-content: center;
             background: #eee;
+            transition: all .2s ease;
+
+            &.scroll {
+                height: 40px;
+            }
 
             li {
                 &:not(:first-child) {
