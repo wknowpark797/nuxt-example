@@ -36,7 +36,23 @@
             <p>carouselData: {{ carouselData }}</p>
         </div>
 
-        <div style="height: 1000px" />
+        <!-- draggable -->
+        <div class="drag-wrap">
+            <draggable 
+                :list="list" 
+                :disabled="false" 
+                ghost-class="ghost" 
+                :move="checkMove"
+                @start="dragging = true"
+                @end="dragging = false">
+
+                <div v-for="item in list" :key="item.name" class="drag-item">
+                    {{ item.name }}
+                </div>
+            </draggable>
+
+            <p>Dragging : {{ dragging }}</p>
+        </div>
     </div>
 </template>
 
@@ -49,6 +65,7 @@ import {
     Progress as HooperProgress,
 } from 'hooper';
 import 'hooper/dist/hooper.css';
+import draggable from 'vuedraggable';
 
 export default {
     name: "UserIndex",
@@ -57,7 +74,8 @@ export default {
         Slide,
         HooperNavigation,
         HooperPagination,
-        HooperProgress
+        HooperProgress,
+        draggable
     },
     data() {
         return {
@@ -77,14 +95,21 @@ export default {
                 },
                 rtl: false
             },
-            carouselData: 0,
             hooperData: [
                 { id: 1, name: "slide01"},
                 { id: 2, name: "slide02"},
                 { id: 3, name: "slide03"},
                 { id: 4, name: "slide04"},
                 { id: 5, name: "slide05"}
-            ]
+            ],
+            carouselData: 0,
+            
+            list: [
+                { name: 'name01', id: 0 },
+                { name: 'name02', id: 1 },
+                { name: 'name03', id: 2 },
+            ],
+            dragging: false,
         }
     },
     watch: {
@@ -102,19 +127,40 @@ export default {
         slideUpdate(payload) {
             // console.log('payload: ', payload);
             this.carouselData = payload.currentSlide;
+        },
+
+        checkMove(e) {
+            // console.log(e);
+            window.console.log('future index: ' + e.draggedContext.futureIndex);
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    .carousel-wrap {
+    .drag-wrap {
         margin-top: 30px;
+
+        > div {
+            display: inline-block;
+        }
+        .drag-item {
+            background: #eee;
+            border: 1px solid #fff;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .ghost {
+            opacity: 0.5;
+            background: #c8ebfb;
+        }        
     }
 </style>
 
 <style lang="scss">
     .carousel-wrap {
+        margin-top: 30px;
+
         .hooper-slide {
             background: #eee;
             border: 1px solid #fff;
