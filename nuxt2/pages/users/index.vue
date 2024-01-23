@@ -43,6 +43,7 @@
                 :disabled="false" 
                 ghost-class="ghost" 
                 :move="checkMove"
+                :animation=300
                 @start="dragging = true"
                 @end="dragging = false">
 
