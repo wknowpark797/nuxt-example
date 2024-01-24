@@ -101,6 +101,18 @@ export default {
         HooperProgress,
         draggable
     },
+    head() {
+        return {
+            title: 'Nuxt2 Users',
+            meta: [
+                { 
+                    hid: 'description', 
+                    name: 'description', 
+                    content: 'users page description'
+                },
+            ]
+        }
+    },
     data() {
         return {
             hooperSettings: {

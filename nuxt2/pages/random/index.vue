@@ -10,6 +10,18 @@
 <script>
 export default {
     name: "RandomIndex",
+    head() {
+        return {
+            title: 'Nuxt2 Random',
+            meta: [
+                { 
+                    hid: 'description', 
+                    name: 'description', 
+                    content: 'random page description'
+                },
+            ]
+        }
+    },
 
     // Axios
 	async asyncData({ $axios }) {
