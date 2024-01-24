@@ -54,6 +54,29 @@
 
             <p>Dragging : {{ dragging }}</p>
         </div>
+
+        <!-- clipboard -->
+        <div class="clipboard-wrap">
+            <input type="text" v-model="clipboardInput">
+            <button 
+                type="button"
+                v-clipboard:copy="clipboardInput"
+                v-clipboard:success="onCopy"
+                v-clipboard:error="onCopyError">
+                COPY
+            </button>
+
+            <ul>
+                <li 
+                    v-for="item in clipboardList" 
+                    :key="item"
+                    v-clipboard:copy="item"
+                    v-clipboard:success="onCopy"
+                    v-clipboard:error="onCopyError">
+                    {{ item }}
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -111,6 +134,13 @@ export default {
                 { name: 'name03', id: 2 },
             ],
             dragging: false,
+
+            clipboardInput: '',
+            clipboardList: [
+                'copy text 001',
+                'copy text 002',
+                'copy text 003',
+            ]
         }
     },
     watch: {
@@ -133,6 +163,13 @@ export default {
         checkMove(e) {
             // console.log(e);
             window.console.log('future index: ' + e.draggedContext.futureIndex);
+        },
+
+        onCopy(e) {
+            alert(`Input text copied : ${e.text}`);
+        },
+        onCopyError() {
+            alert('Failed to copy text');
         }
     }
 }
@@ -155,6 +192,18 @@ export default {
             opacity: 0.5;
             background: #c8ebfb;
         }        
+    }
+
+    .clipboard-wrap {
+        margin-top: 30px;
+
+        ul {
+            margin-top: 30px;
+
+            li {
+                cursor: pointer;
+            }
+        }
     }
 </style>
 
