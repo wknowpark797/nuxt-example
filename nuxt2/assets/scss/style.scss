@@ -1,3 +1,4 @@
+// Reset
 body {
     box-sizing: border-box;
     margin: 0;
@@ -20,4 +21,14 @@ p {
 
 a {
     text-decoration: none;
+}
+
+// Page Transition
+.page-enter-active,
+.page-leave-active {
+    transition: opacity 0.5s;
+}
+.page-enter,
+.page-leave-to {
+    opacity: 0;
 }
