@@ -12,71 +12,93 @@
         </ul>
 
         <!-- hooper -->
-        <div class="carousel-wrap">
-            <hooper ref="carousel" @slide="slideUpdate" :settings="hooperSettings">
-                <slide v-for="(item, idx) in hooperData" :key="idx" :index="idx">
-                    {{ item.name }}
-                </slide>
+        <section class="section">
+            <h2>Hooper Carousel</h2>
 
-                <!-- navigation -->
-                <hooper-navigation slot="hooper-addons"></hooper-navigation>
+            <div class="carousel-wrap">
+                <hooper ref="carousel" @slide="slideUpdate" :settings="hooperSettings">
+                    <slide v-for="(item, idx) in hooperData" :key="idx" :index="idx">
+                        {{ item.name }}
+                    </slide>
 
-                <!-- pagination -->
-                <hooper-pagination slot="hooper-addons"></hooper-pagination>
-                <hooper-pagination slot="hooper-addons" mode="fraction" class="fraction"></hooper-pagination>
+                    <!-- navigation -->
+                    <hooper-navigation slot="hooper-addons"></hooper-navigation>
 
-                <!-- progress -->
-                <hooper-progress slot="hooper-addons"></hooper-progress>
-            </hooper>
+                    <!-- pagination -->
+                    <hooper-pagination slot="hooper-addons"></hooper-pagination>
+                    <hooper-pagination slot="hooper-addons" mode="fraction" class="fraction"></hooper-pagination>
 
-            <!-- carousel controller -->
-            <button @click.prevent="slidePrev">PREV</button>
-            <input v-model="carouselData" type="number" min="0" :max="hooperData.length - 1">
-            <button @click.prevent="slideNext">NEXT</button>
-            <p>carouselData: {{ carouselData }}</p>
-        </div>
+                    <!-- progress -->
+                    <hooper-progress slot="hooper-addons"></hooper-progress>
+                </hooper>
 
+                <!-- carousel controller -->
+                <button @click.prevent="slidePrev">PREV</button>
+                <input v-model="carouselData" type="number" min="0" :max="hooperData.length - 1">
+                <button @click.prevent="slideNext">NEXT</button>
+                <p>carouselData: {{ carouselData }}</p>
+            </div>
+        </section>
+
+        <!-- splide -->
+        <section class="section">
+            <h2>Vue Splide</h2>
+
+            <div class="splide-wrap">
+                
+            </div>
+        </section>
+        
         <!-- draggable -->
-        <div class="drag-wrap">
-            <draggable 
-                :list="list" 
-                :disabled="false" 
-                ghost-class="ghost" 
-                :move="checkMove"
-                :animation=300
-                @start="dragging = true"
-                @end="dragging = false">
+        <section class="section">
+            <h2>Draggable</h2>
 
-                <div v-for="item in list" :key="item.name" class="drag-item">
-                    {{ item.name }}
-                </div>
-            </draggable>
+            <div class="drag-wrap">
+                <draggable 
+                    :list="list" 
+                    :disabled="false" 
+                    ghost-class="ghost" 
+                    :move="checkMove"
+                    :animation=300
+                    @start="dragging = true"
+                    @end="dragging = false">
 
-            <p>Dragging : {{ dragging }}</p>
-        </div>
+                    <div v-for="item in list" :key="item.name" class="drag-item">
+                        {{ item.name }}
+                    </div>
+                </draggable>
+
+                <p>Dragging : {{ dragging }}</p>
+            </div>
+        </section>
 
         <!-- clipboard -->
-        <div class="clipboard-wrap">
-            <input type="text" v-model="clipboardInput">
-            <button 
-                type="button"
-                v-clipboard:copy="clipboardInput"
-                v-clipboard:success="onCopy"
-                v-clipboard:error="onCopyError">
-                COPY
-            </button>
+        <section class="section">
+            <h2>Vue Clipboard</h2>
 
-            <ul>
-                <li 
-                    v-for="item in clipboardList" 
-                    :key="item"
-                    v-clipboard:copy="item"
+            <div class="clipboard-wrap">
+                <input type="text" v-model="clipboardInput">
+                <button 
+                    type="button"
+                    v-clipboard:copy="clipboardInput"
                     v-clipboard:success="onCopy"
                     v-clipboard:error="onCopyError">
-                    {{ item }}
-                </li>
-            </ul>
-        </div>
+                    COPY
+                </button>
+
+                <ul>
+                    <li 
+                        v-for="item in clipboardList" 
+                        :key="item"
+                        v-clipboard:copy="item"
+                        v-clipboard:success="onCopy"
+                        v-clipboard:error="onCopyError">
+                        {{ item }}
+                    </li>
+                </ul>
+            </div>
+        </section>
+
     </div>
 </template>
 
@@ -188,9 +210,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .drag-wrap {
+    .section {
         margin-top: 30px;
 
+        h2 {
+            margin-bottom: 10px;
+        }
+    }
+
+    .drag-wrap {
         > div {
             display: inline-block;
         }
@@ -207,8 +235,6 @@ export default {
     }
 
     .clipboard-wrap {
-        margin-top: 30px;
-
         ul {
             margin-top: 30px;
 
@@ -221,8 +247,6 @@ export default {
 
 <style lang="scss">
     .carousel-wrap {
-        margin-top: 30px;
-
         .hooper-slide {
             background: #eee;
             border: 1px solid #fff;
