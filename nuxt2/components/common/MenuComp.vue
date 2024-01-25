@@ -7,6 +7,11 @@
                 </nuxt-link>
             </li>
             <li>
+                <nuxt-link to="/posts">
+                    Posts
+                </nuxt-link>
+            </li>
+            <li>
                 <nuxt-link to="/users">
                     Users
                 </nuxt-link>

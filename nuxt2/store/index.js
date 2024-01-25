@@ -1,20 +1,27 @@
 export const state = () => ({
-    counter: 0
+    posts: [],
 })
 
 export const getters = {
-    getCounter(state) {
-        return state.counter
-    }
+
 }
 
 export const mutations = {
-    increment(state) {
-        state.counter++
+    addPost(state, payload) {
+        state.posts.unshift(payload);
+    },
+    removePost(state, payload) {
+        const index = state.posts.findIndex(value => value.id === payload.id);
+        state.posts.splice(index, 1);
     }
 }
 
 // 비동기
 export const actions = {
-    
+    add({ commit }, payload) {
+        commit('addPost', payload);
+    },
+    remove({ commit }, payload) {
+        commit('removePost', payload);
+    }
 }
