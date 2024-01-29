@@ -68,6 +68,10 @@ export default {
     mounted() {
         requestAnimationFrame(this.render);
         this.animationId2 = setInterval(this.render2, 1000/60);
+    },
+    beforeDestroy() {
+        cancelAnimationFrame(this.animationId);
+        clearInterval(this.animationId2);
     }
 }
 </script>
