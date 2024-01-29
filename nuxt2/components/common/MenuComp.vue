@@ -21,6 +21,11 @@
                     Random
                 </nuxt-link>
             </li>
+            <li>
+                <nuxt-link to="/animation">
+                    Animation
+                </nuxt-link>
+            </li>
         </ul>
     </nav>
 </template>
