@@ -1,3 +1,5 @@
+// scroll 이벤트 throttle 최적화 예제
+
 <template>
     <div>
         <h1>Category</h1>
@@ -7,7 +9,7 @@
                 v-for="item in categories" 
                 :key="item.idCategory">
 
-                <div class="box">
+                <div ref="box" class="box">
                     <div class="title-wrap">
                         <p>{{ item.strCategory }}</p>
 
@@ -38,6 +40,50 @@ export default {
             ]
         }
     },
+    data() {
+        return {
+            boxes: [],          // 각 box element
+            boxOffsetTop: [],   // 각 box의 offset값
+            scrollY: 0,         // 현재 스크롤 값
+            limit: 0,
+        }
+    },
+    methods: {
+        scrollPosition() {
+            this.boxOffsetTop = [];
+
+            this.boxes.forEach((box) => {
+                this.boxOffsetTop.push(box.offsetTop);
+            })
+        },
+        scrollAction() {
+            this.scrollY = window.scrollY;
+
+            this.boxOffsetTop.forEach((position, idx) => {
+                if(this.scrollY >= position + this.limit) {
+                    this.boxes[idx].classList.add('on');
+                } else {
+                    this.boxes[idx].classList.remove('on');
+                }
+            })
+        },
+    },
+
+    mounted() {
+        this.boxes = this.$refs.box;
+        this.limit = -window.innerHeight / 2;
+
+        this.$nextTick(() => {
+            window.addEventListener('resize', this.scrollPosition);
+            window.addEventListener('scroll', this.scrollAction);
+        })
+        this.scrollPosition();
+        this.scrollAction();
+    },
+    beforeDestroy() {
+        window.removeEventListener('resize', this.scrollPosition);
+        window.removeEventListener('scroll', this.scrollAction);
+    },
 
     // Axios
 	async asyncData({ $axios }) {
@@ -55,13 +101,23 @@ export default {
             &:nth-child(even) {
                 .box {
                     margin-left: auto;
+                    transform: translateX(-150px);
                 }
             }
 
             .box {
-                width: 350px;
+                width: 50%;
                 border: 1px solid #333;
                 padding: 10px;
+
+                opacity: 0;
+                transform: translateX(150px);
+                transition: 0.5s;
+
+                &.on {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
 
                 .title-wrap {
                     display: flex;
