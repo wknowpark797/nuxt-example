@@ -31,21 +31,26 @@
 </template>
 
 <script>
+import { useThrottle } from '~/plugins/throttle';
+
 export default {
     name: 'MenuComp',
     data() {
         return {
-            scroll: false
+            scroll: false,
+            scrollThrottle: null,
         }
     },
 	mounted() {
-		window.addEventListener('scroll', this.handleScroll);
+        this.scrollThrottle = useThrottle(this.handleScroll);
+		window.addEventListener('scroll', this.scrollThrottle);
 	},
 	beforeDestroy() {
-		window.removeEventListener('scroll', this.handleScroll);
+		window.removeEventListener('scroll', this.scrollThrottle);
 	},
     methods: {
 		handleScroll() {
+            console.log('menu scroll event');
             this.scroll = window.scrollY > 0;
 		}
 	},

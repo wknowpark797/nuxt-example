@@ -26,6 +26,8 @@
 </template>
 
 <script>
+import { useThrottle } from '~/plugins/throttle';
+
 export default {
     name: "RandomIndex",
     head() {
@@ -46,10 +48,14 @@ export default {
             boxOffsetTop: [],   // 각 box의 offset값
             scrollY: 0,         // 현재 스크롤 값
             limit: 0,
+
+            positionThrottle: null,
+            actionThrottle: null,
         }
     },
     methods: {
         scrollPosition() {
+            console.log('random resize event');
             this.boxOffsetTop = [];
 
             this.boxes.forEach((box) => {
@@ -57,6 +63,7 @@ export default {
             })
         },
         scrollAction() {
+            console.log('random scroll event');
             this.scrollY = window.scrollY;
 
             this.boxOffsetTop.forEach((position, idx) => {
@@ -72,17 +79,19 @@ export default {
     mounted() {
         this.boxes = this.$refs.box;
         this.limit = -window.innerHeight / 2;
+        this.positionThrottle = useThrottle(this.scrollPosition);
+        this.actionThrottle = useThrottle(this.scrollAction);
 
         this.$nextTick(() => {
-            window.addEventListener('resize', this.scrollPosition);
-            window.addEventListener('scroll', this.scrollAction);
+            window.addEventListener('resize', this.positionThrottle);
+            window.addEventListener('scroll', this.actionThrottle);
         })
         this.scrollPosition();
         this.scrollAction();
     },
     beforeDestroy() {
-        window.removeEventListener('resize', this.scrollPosition);
-        window.removeEventListener('scroll', this.scrollAction);
+        window.removeEventListener('resize', this.positionThrottle);
+        window.removeEventListener('scroll', this.actionThrottle);
     },
 
     // Axios
