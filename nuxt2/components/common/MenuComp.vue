@@ -26,6 +26,11 @@
                     Animation
                 </nuxt-link>
             </li>
+            <li>
+                <nuxt-link to="/scroll">
+                    Scroll
+                </nuxt-link>
+            </li>
         </ul>
     </nav>
 </template>
